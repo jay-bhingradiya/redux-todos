@@ -1,43 +1,31 @@
 import React, {useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {todoActinos} from '../store/todoSlice';
 import Todo from './Todo';
 
-const todos = [
-  {
-    id: 1,
-    text: 'Learn Redux',
-    done: false,
-  },
-  {
-    id: 2,
-    text: 'Learn Web design',
-    done: false,
-  },
-];
-
 const Todos = () => {
-  const [todoList, setTodoList] = useState (todos);
+  const todos = useSelector (state => state.todo.todos);
+  const dispatch = useDispatch ();
+  const [todoList, setTodoList] = useState ([]);
   const [inputValue, setInputValue] = useState ('');
   const [editMode, setEditMode] = useState ({
     isOn: false,
     todo: {},
   });
 
-  const deleteHandler = id => {
-    if (window.confirm ('Are you sure want to Delete')) {
-      const remaingTodo = todoList.filter (todo => todo.id !== id);
-      setTodoList (remaingTodo);
-    }
-  };
   const submitHandler = e => {
     e.preventDefault ();
+
+    if (inputValue === '') {
+      alert ('please Enter valid value');
+      return;
+    }
+
     if (editMode.isOn) {
-      const currentTodoIndex = todoList.findIndex (
-        todo => todo.id == editMode.todo.id
+      dispatch (
+        todoActinos.editTodo ({id: editMode.todo.id, updatedText: inputValue})
       );
 
-      todoList[currentTodoIndex].text = inputValue;
-
-      setTodoList (todoList);
       setInputValue ('');
       setEditMode ({
         isOn: false,
@@ -45,24 +33,18 @@ const Todos = () => {
       });
       return;
     }
-    if (inputValue === '') {
-      alert ('please Enter valid value');
-      return;
-    }
-    const newTodo = [
-      {
-        id: Math.random (),
-        text: inputValue,
-        done: false,
-      },
-    ];
 
-    setTodoList ([...todoList, ...newTodo]);
+    const newTodo = {
+      id: Math.random (),
+      text: inputValue,
+    };
+
+    dispatch (todoActinos.addTodo (newTodo));
     setInputValue ('');
   };
 
   const editHandler = id => {
-    const getTodo = todoList.find (todo => todo.id === id);
+    const getTodo = todos.find (todo => todo.id === id);
     setInputValue (getTodo.text);
     setEditMode ({
       isOn: true,
@@ -70,9 +52,14 @@ const Todos = () => {
     });
   };
 
-  const onChangeHandler = e => {
-    setInputValue (e.target.value);
+  const deleteHandler = id => {
+    if (window.confirm ('Are you sure want to Delete')) {
+      const remaingTodo = todoList.filter (todo => todo.id !== id);
+      setTodoList (remaingTodo);
+    }
   };
+
+  const onChangeHandler = e => setInputValue (e.target.value);
 
   return (
     <div className="todos">
@@ -91,7 +78,7 @@ const Todos = () => {
       </form>
 
       <ul className="todoList">
-        {todoList.map (todo => (
+        {todos.map (todo => (
           <Todo
             key={todo.id}
             todo={todo}

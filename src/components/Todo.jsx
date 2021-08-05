@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {todoActinos} from '../store/todoSlice';
 
-const Todo = ({ todo, onEdit, onDelete }) => {
-  const [isChecked, setIsChecked] = useState(false);
+const Todo = ({todo, onEdit}) => {
+  const [isChecked, setIsChecked] = useState (false);
+  const dispatch = useDispatch ();
 
-  const onChangeHandler = (e) => {
-    setIsChecked(!isChecked);
+  const onChangeHandler = e => {
+    setIsChecked (!isChecked);
   };
 
   const styles = {
     opacity: isChecked ? 0.5 : 1,
   };
+
+  const deleteHandler = () => dispatch (todoActinos.removeTodo (todo.id));
 
   return (
     <li className="todoItem">
@@ -30,7 +35,7 @@ const Todo = ({ todo, onEdit, onDelete }) => {
       >
         Edit
       </button>
-      <button className=" delete-btn" onClick={onDelete}>
+      <button className=" delete-btn" onClick={deleteHandler}>
         Delete
       </button>
     </li>

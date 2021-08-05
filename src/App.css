@@ -68,3 +68,15 @@ body {
   width: 100%;
   margin-left: 5px;
 }
+
+/* For Form */
+
+.form{
+  width:400px;
+  margin: 20px auto;
+}
+
+.plans{
+    border: 1px solid black; 
+  padding: 10px;
+   margin: 5px 0}
