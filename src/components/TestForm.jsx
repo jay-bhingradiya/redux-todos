@@ -1,15 +1,16 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import Select from 'react-select';
-import {useDropzone} from 'react-dropzone';
+import {useDispatch} from 'react-redux';
+
+import {libraryActions} from '../store/librarySlice';
 
 const TestForm = () => {
-  const [selectOptions, setSelectOptions] = useState ([]);
-  const [loading, setLoading] = useState (false);
-  const [selectedOptions, setSelectedOptions] = useState ('Morning');
+  const dispatch = useDispatch ();
   const libNameRef = useRef ();
 
   const [dynamicPlan, setDynamicPlan] = useState ([
     {
+      id: Math.random (),
       name: '',
       amount: '',
       type: {value: 'Morning', label: 'Morning'},
@@ -25,24 +26,26 @@ const TestForm = () => {
     {value: 'Full Day', label: 'Full Day'},
   ];
 
-  // useEffect (() => {
-  //   setLoading (true);
-  //   setTimeout (() => {
-  //     setLoading (false);
-  //   }, 2000);
-  // }, []);
-
   const submitHandler = e => {
     e.preventDefault ();
+
     if (libNameRef.current.value === '') {
       alert ('please enter library name');
       return;
     }
+
+    const newPlanList = [...dynamicPlan];
+    newPlanList.map ((plan, key) => {
+      newPlanList[key].type = plan.type.value;
+    });
+
     const fullData = {
+      id: Math.random (),
       name: libNameRef.current.value,
-      plans: dynamicPlan,
+      plans: newPlanList,
     };
-    console.log (fullData);
+
+    dispatch (libraryActions.addLibrary (fullData));
   };
 
   const onChangePlan = (name, value, index) => {
@@ -55,6 +58,7 @@ const TestForm = () => {
     setDynamicPlan ([
       ...dynamicPlan,
       {
+        id: Math.random (),
         name: '',
         amount: '',
         type: {value: 'Morning', label: 'Morning'},
@@ -66,7 +70,6 @@ const TestForm = () => {
   const removePlan = index => {
     let newList = [...dynamicPlan];
     newList.splice (index, 1);
-    console.log (newList);
     setDynamicPlan (newList);
   };
 
@@ -101,8 +104,7 @@ const TestForm = () => {
                 onChange={(e, action) => onChangePlan (action.name, e, key)}
                 name="type"
                 value={plan.type}
-                // value={planTypeOptions[1]}
-                // && getPlanType (plan.type)
+                // plan.type && getPlanType (plan.type)
               />
             </div>
             <div className="form-group">
@@ -155,19 +157,5 @@ const TestForm = () => {
     </div>
   );
 };
-
-{
-  /* <Select
-          onChange={onChangeSelect}
-          isLoading={loading}
-          options={selectOptions}
-          autoFocus="true"
-        /> */
-}
-{
-  /* const onChangeSelect = e => console.log (e);
-  // const onChangePlan = (value, action) => console.log (action.name); 
-  we can manage loading in select */
-}
 
 export default TestForm;

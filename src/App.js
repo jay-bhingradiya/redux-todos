@@ -4,20 +4,26 @@ import Todos from './components/Todos';
 import 'bootstrap/dist/css/bootstrap.css';
 import TestForm from './components/TestForm';
 import store from './store';
-import LibraryListing from './components/LibraryListing';
+import ChoosePlan from './components/ChoosePlan';
 import React, {useState} from 'react';
+import LibraryListing from './components/LibraryListing';
+import Navbar from './components/Navbar';
+import {BrowserRouter} from 'react-router-dom';
 
 function App () {
-  const [showForm, setShowForm] = useState (true);
+  const [showForm, setShowForm] = useState (false);
   return (
-    <Provider store={store}>
-      {/* <Todos /> */}
-      <div className="btn btn-primary" onClick={() => setShowForm (!showForm)}>
+    <BrowserRouter>
+      <Provider store={store}>
+        <Navbar />
+        {/* <Todos /> */}
+        {/* <div className="btn btn-primary" onClick={() => setShowForm (!showForm)}>
         {!showForm ? 'Add Plan' : 'Choose Plan'} {' '}
-      </div>
-      {showForm ? <TestForm /> : <LibraryListing />}
-
-    </Provider>
+      </div> */}
+        {/* {showForm ? <TestForm /> : <ChoosePlan />} */}
+        <LibraryListing />
+      </Provider>
+    </BrowserRouter>
   );
 }
 

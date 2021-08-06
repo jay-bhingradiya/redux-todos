@@ -80,3 +80,57 @@ body {
     border: 1px solid black; 
   padding: 10px;
    margin: 5px 0}
+
+   table {
+    margin: 10px auto;
+  }
+  td,
+  th {
+    padding: 10px 18px;
+    text-align: center;
+    border: 1px solid #5f4751e0;
+  }
+
+  h6{text-align: center;}
+
+  /* Navbar */
+  .navbar {
+    background-color: #31282c;
+    color: white;
+    padding: 0 12px;
+  }
+  .logo h1 {
+    margin: 17px 10px;
+  }
+  
+  .upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .lowwer {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 10px;
+  }
+  
+  .lowwer span:last-child {
+    margin-left: 20px;
+  }
+  .lowwer span:first-child {
+    cursor: pointer;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    margin-left: 11px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-weight: 500;
+    border: 1px solid white;
+    color: white;
+  }
+  .active {
+    background-color: white;
+    color: #31282c;
+  }
