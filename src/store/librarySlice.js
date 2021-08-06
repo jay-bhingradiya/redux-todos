@@ -22,7 +22,7 @@ const initialState = {
       name: 'Testing 2',
       plans: [
         {id: 1, name: 'Silver', amount: '555', type: 'Night', duration: '55'},
-        // {id: 2, name: 'Gold', amount: '666', type: 'Afternoon', duration: '66'},
+        {id: 2, name: 'Gold', amount: '666', type: 'Afternoon', duration: '66'},
         {
           id: 3,
           name: 'Platinum',
@@ -68,7 +68,7 @@ const librarySlice = createSlice ({
       currentLibrary.plans[currentPlanIndex] = newData;
       newList[currentLibraryIndex] = currentLibrary;
 
-      state.librarys = newList; // without this also working
+      state.librarys = newList; // without this ,also working
     },
     removePlan (state, action) {
       const {libId, planId} = action.payload;

@@ -22,6 +22,7 @@ const LibraryListing = () => {
             <th>Shift</th>
             <th>Amount</th>
             <th>Duration in Days</th>
+            <th colSpan="2">action</th>
           </tr>
         </thead>
         <tbody>
@@ -33,11 +34,10 @@ const LibraryListing = () => {
               <td>{plan.duration}</td>
               <td>
                 <PlanFormModal libId={libId} editMode={true} plan={plan} />
-              </td>
-              <td>
+
                 <button
                   onClick={() => deleteHandler (plan.id, libId)}
-                  className="btn btn-danger"
+                  className="btn btn-danger mx-2"
                 >
                   Delete
                 </button>
@@ -49,8 +49,6 @@ const LibraryListing = () => {
       </table>
     );
   };
-
-  const addPlanHandler = id => alert (id);
 
   return (
     <div className="">

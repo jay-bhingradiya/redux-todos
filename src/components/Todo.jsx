@@ -2,11 +2,15 @@ import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {todoActinos} from '../store/todoSlice';
 
-const Todo = ({todo, onEdit}) => {
+const Todo = ({todo, onEdit, editMode}) => {
   const [isChecked, setIsChecked] = useState (false);
   const dispatch = useDispatch ();
 
   const onChangeHandler = e => {
+    if (editMode) {
+      alert ('In edit Mode');
+      return;
+    }
     setIsChecked (!isChecked);
   };
 
@@ -23,6 +27,7 @@ const Todo = ({todo, onEdit}) => {
         name={todo.id}
         onChange={onChangeHandler}
         id={todo.id}
+        checked={isChecked}
       />
       <div className="todo-text">
         {isChecked ? <s>{todo.text}</s> : `${todo.text}`}

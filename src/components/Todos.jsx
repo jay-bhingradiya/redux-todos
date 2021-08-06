@@ -84,6 +84,7 @@ const Todos = () => {
             todo={todo}
             onDelete={deleteHandler.bind (null, todo.id)}
             onEdit={editHandler.bind (null, todo.id)}
+            editMode={editMode.isOn}
           />
         ))}
       </ul>

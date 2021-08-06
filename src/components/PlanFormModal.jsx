@@ -91,6 +91,18 @@ const PlanFormModal = ({plan, libId, editMode}) => {
     newList[fieldName] = value;
     setNewPlan (newList);
   };
+
+  const modalClasses = {
+    beforeClose: 'modalContentClose',
+    base: 'customContent',
+  };
+
+  const overLayClasses = {
+    base: 'customOverlay',
+    beforeClose: 'overlayClose',
+    afterOpen: 'overlayOpen',
+  };
+
   return (
     <Fragment>
       <button className="btn btn-primary" onClick={openModal}>
@@ -99,12 +111,16 @@ const PlanFormModal = ({plan, libId, editMode}) => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
+        // style={customStyles}
+        // overlayClassName="customOverlay"
+        overlayClassName={overLayClasses}
+        // className="customContent"
+        className={modalClasses}
+        closeTimeoutMS={300}
       >
         {editMode ? 'Edit Modal' : 'Add Modal'}
         <form onSubmit={submitHandler}>
-          <div className="">
+          <div className="plan-modal-form">
             <div className="form-group">
               <label htmlFor="planType">Plan Type</label>
               <Select
@@ -114,7 +130,6 @@ const PlanFormModal = ({plan, libId, editMode}) => {
                 onChange={(e, action) => onChangePlan (action.name, e)}
                 name="type"
                 value={newPlan.type}
-                // plan.type && getPlanType (plan.type)
               />
             </div>
             <div className="form-group">

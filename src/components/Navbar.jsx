@@ -5,12 +5,33 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="logo">
-        <h1>Admin Panel</h1>
+        <h1>Redux</h1>
       </div>
 
       <div className="nav-links">
-        <NavLink exact to="/" activeClassName="active" className="navbar-link">
-          Home{' '}
+        <NavLink
+          to="/todo-list"
+          activeClassName="active"
+          className="navbar-link"
+        >
+          To-do
+        </NavLink>
+        <NavLink to="/form" activeClassName="active" className="navbar-link">
+          Add Library
+        </NavLink>
+        <NavLink
+          to="/choose-plan"
+          activeClassName="active"
+          className="navbar-link"
+        >
+          Choose Plan
+        </NavLink>
+        <NavLink
+          to="/lib-listing"
+          activeClassName="active"
+          className="navbar-link"
+        >
+          Library List
         </NavLink>
       </div>
     </nav>

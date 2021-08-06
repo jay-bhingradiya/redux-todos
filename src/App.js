@@ -1,29 +1,26 @@
+import React from 'react';
 import {Provider} from 'react-redux';
-import './App.css';
-import Todos from './components/Todos';
 import 'bootstrap/dist/css/bootstrap.css';
-import TestForm from './components/TestForm';
+import './App.css';
 import store from './store';
-import ChoosePlan from './components/ChoosePlan';
-import React, {useState} from 'react';
-import LibraryListing from './components/LibraryListing';
 import Navbar from './components/Navbar';
-import {BrowserRouter} from 'react-router-dom';
+import routes from './routes';
+
+import {Switch, Route, Redirect} from 'react-router-dom';
 
 function App () {
-  const [showForm, setShowForm] = useState (false);
   return (
-    <BrowserRouter>
-      <Provider store={store}>
-        <Navbar />
-        {/* <Todos /> */}
-        {/* <div className="btn btn-primary" onClick={() => setShowForm (!showForm)}>
-        {!showForm ? 'Add Plan' : 'Choose Plan'} {' '}
-      </div> */}
-        {/* {showForm ? <TestForm /> : <ChoosePlan />} */}
-        <LibraryListing />
-      </Provider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <Navbar />
+      <Switch>
+        <Route path="/" exact render={() => <Redirect to="/todo-list" />} />
+        {routes.map ((route, key) => {
+          return (
+            <Route key={key} path={route.path} component={route.component} />
+          );
+        })}
+      </Switch>
+    </Provider>
   );
 }
 
