@@ -1,17 +1,17 @@
-import React from 'react';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
-import {libraryActions} from '../store/librarySlice';
-import PlanFormModal from './PlanFormModal';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { libraryActions } from "../store/librarySlice";
+import PlanFormModal from "./PlanFormModal";
 
 const LibraryListing = () => {
-  const librarys = useSelector (state => state.library.librarys);
+  const librarys = useSelector((state) => state.library.librarys);
 
-  const GenerateTable = ({data, libId}) => {
-    const dispatch = useDispatch ();
-    const editHandler = () => {};
+  const GenerateTable = ({ data, libId }) => {
+    const dispatch = useDispatch();
+
     const deleteHandler = (planId, libId) => {
-      dispatch (libraryActions.removePlan ({planId, libId}));
+      dispatch(libraryActions.removePlan({ planId, libId }));
     };
 
     return (
@@ -26,7 +26,7 @@ const LibraryListing = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map ((plan, key) => (
+          {data.map((plan, key) => (
             <tr key={key}>
               <td>{plan.name}</td>
               <td>{plan.type}</td>
@@ -36,7 +36,7 @@ const LibraryListing = () => {
                 <PlanFormModal libId={libId} editMode={true} plan={plan} />
 
                 <button
-                  onClick={() => deleteHandler (plan.id, libId)}
+                  onClick={() => deleteHandler(plan.id, libId)}
                   className="btn btn-danger mx-2"
                 >
                   Delete
@@ -44,7 +44,6 @@ const LibraryListing = () => {
               </td>
             </tr>
           ))}
-
         </tbody>
       </table>
     );
@@ -52,7 +51,7 @@ const LibraryListing = () => {
 
   return (
     <div className="">
-      {librarys.map ((library, key) => (
+      {librarys.map((library, key) => (
         <div key={key} className="border border-primary m-2">
           <h6 className="my-2">
             {library.name} ----

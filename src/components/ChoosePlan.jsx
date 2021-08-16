@@ -1,38 +1,37 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector} from 'react-redux';
-import Select from 'react-select';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import Select from "react-select";
 
 const ChoosePlan = () => {
-  const librarys = useSelector (state => state.library.librarys);
+  const librarys = useSelector((state) => state.library.librarys);
 
-  const [currentPlan, setCurrentPlan] = useState ({
-    currentLibraryId: '',
-    amount: '',
-    duration: '',
-    name: '',
-    type: '',
+  const [currentPlan, setCurrentPlan] = useState({
+    currentLibraryId: "",
+    amount: "",
+    duration: "",
+    name: "",
+    type: "",
   });
 
   let libraryOptions = [];
 
-  librarys.map (plan => {
-    libraryOptions.push ({
+  librarys.forEach((plan) => {
+    libraryOptions.push({
       value: plan.id,
       label: plan.name,
     });
   });
 
-  // const [libraryOptions, setLibraryOptions] = useState (latestOptions);
-  const [planOptions, setplanOptions] = useState ([]);
+  const [planOptions, setplanOptions] = useState([]);
 
-  const onPlanChange = e => {
-    const currentLib = librarys.find (
-      lib => lib.id === currentPlan.currentLibraryId
+  const onPlanChange = (e) => {
+    const currentLib = librarys.find(
+      (lib) => lib.id === currentPlan.currentLibraryId
     );
 
-    const planData = currentLib.plans.find (plan => plan.id === e.value);
+    const planData = currentLib.plans.find((plan) => plan.id === e.value);
 
-    setCurrentPlan ({
+    setCurrentPlan({
       ...currentPlan,
       amount: planData.amount,
       duration: planData.duration,
@@ -41,27 +40,27 @@ const ChoosePlan = () => {
     });
   };
 
-  const onLibChange = e => {
-    const currentLib = librarys.find (lib => lib.id === e.value);
+  const onLibChange = (e) => {
+    const currentLib = librarys.find((lib) => lib.id === e.value);
     let latestOptions = [];
 
-    currentLib.plans.map (plan => {
-      latestOptions.push ({
+    currentLib.plans.forEach((plan) => {
+      latestOptions.push({
         value: plan.id,
         label: `${plan.name} (${plan.type})`,
       });
     });
 
-    setCurrentPlan ({
+    setCurrentPlan({
       ...currentPlan,
       currentLibraryId: currentLib.id,
-      amount: '',
-      duration: '',
-      name: '',
-      type: '',
+      amount: "",
+      duration: "",
+      name: "",
+      type: "",
     });
 
-    setplanOptions (latestOptions);
+    setplanOptions(latestOptions);
   };
 
   return (
@@ -72,7 +71,7 @@ const ChoosePlan = () => {
           <Select
             options={libraryOptions}
             name="libName"
-            onChange={e => onLibChange (e)}
+            onChange={(e) => onLibChange(e)}
           />
         </div>
         <div className="form-group">
@@ -80,7 +79,7 @@ const ChoosePlan = () => {
           <Select
             options={planOptions}
             name="type"
-            onChange={e => onPlanChange (e)}
+            onChange={(e) => onPlanChange(e)}
           />
         </div>
         <div className="form-group">
@@ -127,7 +126,6 @@ const ChoosePlan = () => {
             disabled
           />
         </div>
-
       </div>
     </div>
   );
