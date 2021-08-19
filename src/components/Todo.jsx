@@ -1,24 +1,26 @@
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {todoActinos} from '../store/todoSlice';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { todoActinos } from "../store/todoSlice";
 
-const Todo = ({todo, onEdit, editMode}) => {
-  const [isChecked, setIsChecked] = useState (false);
-  const dispatch = useDispatch ();
+const Todo = ({ todo, onEdit, editMode }) => {
+  const [isChecked, setIsChecked] = useState(false);
+  const dispatch = useDispatch();
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     if (editMode) {
-      alert ('In edit Mode');
+      alert("In edit Mode");
       return;
     }
-    setIsChecked (!isChecked);
+    setIsChecked(!isChecked);
   };
 
-  const styles = {
-    opacity: isChecked ? 0.5 : 1,
+  const deleteHandler = () => {
+    if (editMode) {
+      alert("in edit mode");
+      return;
+    }
+    dispatch(todoActinos.removeTodo(todo.id));
   };
-
-  const deleteHandler = () => dispatch (todoActinos.removeTodo (todo.id));
 
   return (
     <li className="todoItem">
@@ -34,7 +36,7 @@ const Todo = ({todo, onEdit, editMode}) => {
       </div>
       <button
         className="btn-light mr-5"
-        style={styles}
+        style={{ opacity: isChecked ? 0.5 : 1 }}
         onClick={onEdit}
         disabled={isChecked}
       >
